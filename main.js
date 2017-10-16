@@ -1,37 +1,17 @@
-var events = require('events');
-var eventEmitter = new events.EventEmitter();
-
-// listener #1
-var listner1 = function listner1() {
-   console.log('listner1 executed.');
+buf = new Buffer(26);
+for (var i = 0 ; i < 26 ; i++) {
+  buf[i] = i + 97;
 }
 
-// listener #2
-var listner2 = function listner2() {
-  console.log('listner2 executed.');
-}
+console.log( buf.toString('ascii'));       // outputs: abcdefghijklmnopqrstuvwxyz
+console.log( buf.toString('ascii',0,5));   // outputs: abcde
+console.log( buf.toString('utf8',0,5));    // outputs: abcde
+console.log( buf.toString(undefined,0,5)); // encoding defaults to 'utf8', outputs abcde
+var buf = new Buffer('Simply Easy Learning');
+var json = buf.toJSON(buf);
 
-// Bind the connection event with the listner1 function
-eventEmitter.addListener('connection', listner1);
-
-// Bind the connection event with the listner2 function
-eventEmitter.on('connection', listner2);
-
-var eventListeners = require('events').EventEmitter.listenerCount
-   (eventEmitter,'connection');
-console.log(eventListeners + " Listner(s) listening to connection event");
-
-// Fire the connection event 
-eventEmitter.emit('connection');
-
-// Remove the binding of listner1 function
-eventEmitter.removeListener('connection', listner1);
-console.log("Listner1 will not listen now.");
-
-// Fire the connection event 
-eventEmitter.emit('connection');
-
-eventListeners = require('events').EventEmitter.listenerCount(eventEmitter,'connection');
-console.log(eventListeners + " Listner(s) listening to connection event");
-
-console.log("Program Ended.");
+console.log(json)
+var buffer1 = new Buffer('TutorialsPoint ');
+var buffer2 = new Buffer('Simply Easy Learning');
+var buffer3 = Buffer.concat([buffer1,buffer2]);
+console.log("buffer3 content: " + buffer3.toString());
