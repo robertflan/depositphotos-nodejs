@@ -1,22 +1,21 @@
 var fs = require("fs");
-var data = '';
+var data = 'Simply Easy Learning';
 
-// Create a readable stream
-var readerStream = fs.createReadStream('input.rtf');
+// Create a writable stream
+var writerStream = fs.createWriteStream('output.txt');
 
-// Set the encoding to be utf8. 
-readerStream.setEncoding('UTF8');
+// Write the data to stream with encoding to be utf8
+writerStream.write(data,'UTF8');
 
-// Handle stream events --> data, end, and error
-readerStream.on('data', function(chunk) {
-   data += chunk;
+// Mark the end of file
+writerStream.end();
+
+// Handle stream events --> finish, and error
+writerStream.on('finish', function() {
+    console.log("Write completed.");
 });
 
-readerStream.on('end',function(){
-   console.log(data);
-});
-
-readerStream.on('error', function(err){
+writerStream.on('error', function(err){
    console.log(err.stack);
 });
 
